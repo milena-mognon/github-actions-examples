@@ -1,0 +1,35 @@
+name: Frontend - Lint, Typescript and Build Check
+
+# Quando for feito um pull_request para a branch beta
+on:
+  pull_request:
+    branches:
+      - beta
+
+# Executar essas verificações
+jobs:
+  eslint-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Node Setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Install modules
+        run: |
+          cd frontend
+          yarn
+
+      - name: Run ESLint
+        run: |
+          cd frontend
+          yarn lint
+
+      - name: TypeScript Check and Build
+        run: |
+          cd frontend
+          yarn build
